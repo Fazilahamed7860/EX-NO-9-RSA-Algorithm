@@ -36,12 +36,64 @@ Step 5: **Security Foundation
 The security of RSA relies on the difficulty of factoring large numbers; thus, choosing sufficiently large prime numbers for \( p \) and \( q \) is crucial for security.
 
 ## Program:
+~~~
+#include <stdio.h>
 
+int main()
+{
+    int p, q, n, phi, e, d = 0;
+    int msg, c, m, i;
 
+    printf("***** Simulation of RSA Encryption and Decryption *****\n");
+
+    printf("Enter a prime number (p): ");
+    scanf("%d", &p);
+
+    printf("Enter another prime number (q): ");
+    scanf("%d", &q);
+
+    n = p * q;
+    phi = (p - 1) * (q - 1);
+
+    printf("Enter a value for public key exponent (e) such that 1 < e < %d:\n", phi);
+    scanf("%d", &e);
+
+    for (i = 1; i < phi; i++)
+    {
+        if ((e * i) % phi == 1)
+        {
+            d = i;
+            break;
+        }
+    }
+
+    printf("Public key: (n = %d, e = %d)\n", n, e);
+    printf("Private key: (n = %d, d = %d)\n", n, d);
+
+    printf("Enter the message to encrypt (as an integer): ");
+    scanf("%d", &msg);
+
+    c = 1;
+    for (i = 0; i < e; i++)
+        c = (c * msg) % n;
+
+    printf("Encrypted message: %d\n", c);
+
+    m = 1;
+    for (i = 0; i < d; i++)
+        m = (m * c) % n;
+
+    printf("Decrypted message: %d\n", m);
+
+    return 0;
+}
+
+~~~
 
 
 ## Output:
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fa40d8cf-3ea7-44dc-9adc-c79b72f9a3d0" />
 
 
 ## Result:
